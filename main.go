@@ -111,6 +111,11 @@ func main() {
 func startThread() (err error) {
 	channel := gh.GetInput("DISCORD_CHANNEL")
 
+	color, err := getStageColor()
+	if err != nil {
+		return errors.Wrap(err, "failed to get color for start thread")
+	}
+
 	embedContent, err := getThreadHeaderEmbedContent(false)
 	if err != nil {
 		return errors.Wrap(err, "failed to get thread header embed content")
@@ -139,20 +144,30 @@ func startThread() (err error) {
 		return errors.Wrap(err, "failed to start thread from message")
 	}
 
+	//send message that the setup is starting
+	_, err = bot.ChannelMessageSendComplex(thread.ID, &discord.MessageSend{
+		Embeds: []*discord.MessageEmbed{
+			{
+				Color:       color,
+				Description: gh.GetInput("STAGE_STATUS_LONG"),
+			},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "failed to send new message status")
+	}
+
 	gh.SetOutput("DISCORD_MESSAGE_ID", msg.ID)
 	gh.SetOutput("DISCORD_THREAD_ID", thread.ID)
 
 	return nil
 }
 
-func updateThread() error {
-	channel := gh.GetInput("DISCORD_CHANNEL")
-	messageID := gh.GetInput("DISCORD_THREAD_MESSAGE_ID")
-	thread := gh.GetInput("DISCORD_THREAD_ID")
+func getStageColor() (int, error) {
 
 	stage := gh.GetInput("STAGE")
-	color := PinkColor
 
+	color := PinkColor
 	switch stage {
 	case "test":
 		color = PinkColor
@@ -167,7 +182,18 @@ func updateThread() error {
 	case "complete":
 		color = GreenColor
 	default:
-		return errors.Errorf("Unknown stage %s", stage)
+		return 0, errors.Errorf("Unknown color stage %s", stage)
+	}
+	return color, nil
+}
+
+func updateThread() error {
+	channel := gh.GetInput("DISCORD_CHANNEL")
+	messageID := gh.GetInput("DISCORD_THREAD_MESSAGE_ID")
+	thread := gh.GetInput("DISCORD_THREAD_ID")
+	color, err := getStageColor()
+	if err != nil {
+		return errors.Wrap(err, "failed to get color for update thread")
 	}
 
 	embedContent, err := getThreadHeaderEmbedContent(false)
@@ -340,7 +366,7 @@ func getThreadHeaderEmbedContent(fail bool) (*discord.MessageEmbed, error) {
 		}
 		color = GreenColor
 	default:
-		return nil, errors.Errorf("Unknown stage %s", stage)
+		return nil, errors.Errorf("Unknown fields stage %s", stage)
 	}
 
 	if fail {
