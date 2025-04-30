@@ -258,3 +258,20 @@ jobs:
           STAGE_STATUS_LONG: "Deployment Complete"
           STAGE_ERROR: ""
           PING_ROLE: "<@&988658826599342120>"
+
+      - run: sleep 2s
+        shell: bash
+
+      - uses: streemtech/discord-action@v1
+        with:
+          DISCORD_BOT_TOKEN: ${{ secrets.BUILD_BOT_TOKEN }}
+          DISCORD_CHANNEL: "923504689214025728"
+          SERVICE_NAME: "action"
+          SERVICE_ENVIRONMENT: "PRODUCTION"
+          STAGE: "deploy"
+          STAGE_STATUS: "Rollout Failed"
+          DISCORD_THREAD_ID: ${{ steps.initialNotice.outputs.DISCORD_THREAD_ID }}
+          DISCORD_THREAD_MESSAGE_ID: ${{ steps.initialNotice.outputs.DISCORD_MESSAGE_ID }}
+          STAGE_STATUS_LONG: "Deployment Complete"
+          STAGE_ERROR: "Rollout failure. THe step took too long"
+          PING_ROLE: "<@&988658826599342120>"
