@@ -19,20 +19,29 @@ jobs:
           VERBOSE: true
           GIT_API_TAGGING: false
           DEFAULT_BUMP: patch
+
+      - name: Parse semver string
+        id: semver_parser
+        uses: release-kit/semver@v2
+        with:
+          string: "${{ steps.tag.outputs.new_tag }}"
+
       - name: Tag Major
         uses: anothrNick/github-tag-action@1.71.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VERBOSE: true
           GIT_API_TAGGING: false
-          CUSTOM_TAG: v${{ steps.tag.outputs.major }}
+          FORCE_WITHOUT_CHANGES: true
+          CUSTOM_TAG: v${{ steps.semver_parser.outputs.major }}
       - name: Tag Minor
         uses: anothrNick/github-tag-action@1.71.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VERBOSE: true
           GIT_API_TAGGING: false
-          CUSTOM_TAG: v${{ steps.tag.outputs.major }}.${{ steps.tag.outputs.minor }}
+          FORCE_WITHOUT_CHANGES: true
+          CUSTOM_TAG: v${{ steps.semver_parser.outputs.major }}.${{ steps.semver_parser.outputs.minor }}
 
       - name: Release
         uses: softprops/action-gh-release@v2
