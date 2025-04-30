@@ -88,6 +88,7 @@ func main() {
 	thread := gh.GetInput("DISCORD_THREAD_ID")
 	messageID := gh.GetInput("DISCORD_THREAD_MESSAGE_ID")
 	stageError := gh.GetInput("STAGE_ERROR")
+	canceledMsg := gh.GetInput("CANCELED_MESSAGE")
 
 	if (thread == "") != (messageID == "") {
 		gh.Fatalf("Must set both or neither of DISCORD_THREAD_ID and DISCORD_THREAD_MESSAGE_ID")
@@ -96,10 +97,12 @@ func main() {
 
 	if thread == "" || messageID == "" {
 		err = startThread()
-	} else if stageError == "" {
-		err = updateThread()
-	} else {
+	} else if stageError != "" {
 		err = reportStageError()
+	} else if canceledMsg != "" {
+		err = reportCanceled()
+	} else {
+		err = updateThread()
 	}
 
 	if err != nil {
@@ -265,6 +268,42 @@ func reportStageError() error {
 	}
 
 	return nil
+}
+
+func reportCanceled() error {
+
+	embedContent, err := getThreadHeaderEmbedContent(true)
+	if err != nil {
+		return errors.Wrap(err, "failed to get thread header embed content")
+	}
+
+	embedContent.Description = gh.GetInput("CANCELED_MESSAGE")
+	embedContent.Color = GreyColor
+	_, err = bot.ChannelMessageEditComplex(&discord.MessageEdit{
+		ID:      gh.GetInput("DISCORD_THREAD_MESSAGE_ID"),
+		Channel: gh.GetInput("DISCORD_CHANNEL"),
+		Embeds: &[]*discord.MessageEmbed{
+			embedContent,
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "failed to edit message")
+	}
+
+	_, err = bot.ChannelMessageSendComplex(gh.GetInput("DISCORD_THREAD_ID"), &discord.MessageSend{
+		Embeds: []*discord.MessageEmbed{
+			{
+				Color:       GreyColor,
+				Description: gh.GetInput("STAGE_STATUS_LONG"),
+			},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "failed to send new message status")
+	}
+
+	return nil
+
 }
 
 // helpers

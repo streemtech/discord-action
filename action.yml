@@ -44,3 +44,7 @@ inputs:
     description: "The role to ping on errors."
     required: false
     default: ""
+  CANCELED_MESSAGE:
+    description: "Like Error message. If set, this value will be output as a grey notice in the header, and the STAGE_STATUS_LONG will be output as a grey notice in the list of messages"
+    required: false
+    default: ""
