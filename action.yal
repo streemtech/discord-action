@@ -19,7 +19,7 @@ inputs:
     description: "the environment being executed in"
     required: true
   STAGE:
-    description: "What stage of the build currently being executed. Shoul be one of test,build,e2e,final-build,deploy"
+    description: "What stage of the build currently being executed. Shoul be one of test,build,e2e,final-build,deploy,complete"
     required: true
   STAGE_STATUS:
     description: "The value to use to update the top level indicator"
@@ -27,12 +27,20 @@ inputs:
   DISCORD_THREAD_ID:
     description: "The id of the thread to post the message in. DISCORD_THREAD_ID and DISCORD_THREAD_MESSAGE_ID must be set tegother if set."
     required: false
+    default: ""
   DISCORD_THREAD_MESSAGE_ID:
     description: "The ID of the original message that needs to be updated. DISCORD_THREAD_MESSAGE_ID and DISCORD_THREAD_ID must be set tegother if set."
     required: false
+    default: ""
   STAGE_STATUS_LONG:
     description: "The longer description sent in chat for what is currently happening."
     required: false
+    default: ""
   STAGE_ERROR:
     description: "The error message to print if an error occurred. Will be printed at the stage that it happened in & update the top level to be included."
     required: false
+    default: ""
+  PING_ROLE:
+    description: "The role to ping on errors."
+    required: false
+    default: ""

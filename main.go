@@ -163,6 +163,8 @@ func updateThread() error {
 		color = darkBlueColor
 	case "deploy":
 		color = PurpleColor
+	case "complete":
+		color = GreenColor
 	default:
 		return errors.Errorf("Unknown stage %s", stage)
 	}
@@ -222,6 +224,7 @@ func reportStageError() error {
 	}
 
 	_, err = bot.ChannelMessageSendComplex(thread, &discord.MessageSend{
+		Content: gh.GetInput("PING_ROLE"),
 		Embeds: []*discord.MessageEmbed{
 			{
 				Color:       RedColor,
@@ -273,7 +276,7 @@ func getThreadHeaderEmbedContent(fail bool) (*discord.MessageEmbed, error) {
 	fields := []*discord.MessageEmbedField{}
 	stage := gh.GetInput("STAGE")
 	stageStatus := gh.GetInput("STAGE_STATUS")
-	color := PinkColor
+	color := GreenColor
 
 	if fail {
 		stageStatus = fmt.Sprintf("%s %s %s", failEmoji, stageStatus, failEmoji)
@@ -326,6 +329,15 @@ func getThreadHeaderEmbedContent(fail bool) (*discord.MessageEmbed, error) {
 			{Name: "Deploy", Value: stageStatus, Inline: true},
 		}
 		color = PurpleColor
+	case "complete":
+		fields = []*discord.MessageEmbedField{
+			{Name: "Base Tests", Value: CompleteEmoji, Inline: true},
+			{Name: "Compile & Build", Value: CompleteEmoji, Inline: true},
+			{Name: "End 2 End", Value: CompleteEmoji, Inline: true},
+			{Name: "Re-Tag", Value: CompleteEmoji, Inline: true},
+			{Name: "Deploy", Value: CompleteEmoji, Inline: true},
+		}
+		color = GreenColor
 	default:
 		return nil, errors.Errorf("Unknown stage %s", stage)
 	}

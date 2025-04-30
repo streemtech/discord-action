@@ -1,0 +1,21 @@
+name: "Test Announcements"
+on:
+  workflow_dispatch:
+
+jobs:
+  github-action-go:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: streemtech/discord-action@v1
+        with:
+          DISCORD_BOT_TOKEN: ${{ secrets.BUILD_BOT_TOKEN }}
+          DISCORD_CHANNEL: "923504689214025728"
+          SERVICE_NAME: "action"
+          SERVICE_ENVIRONMENT: "PRODUCTION"
+          STAGE: "test"
+          STAGE_STATUS: "testing"
+          DISCORD_THREAD_ID: ""
+          DISCORD_THREAD_MESSAGE_ID: ""
+          STAGE_STATUS_LONG: "Longer status text"
+          STAGE_ERROR: ""
+          PING_ROLE: "<@&988658826599342120>"
