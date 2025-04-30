@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 	"time"
 
 	discord "github.com/bwmarrin/discordgo"
@@ -48,39 +49,39 @@ func main() {
 	//check all required inputs
 	botToken := gh.GetInput("DISCORD_BOT_TOKEN")
 	if botToken == "" {
-		gh.Errorf("DISCORD_BOT_TOKEN is required")
+		gh.Fatalf("DISCORD_BOT_TOKEN is required")
 		return
 	}
 	channel := gh.GetInput("DISCORD_CHANNEL")
 	if channel == "" {
-		gh.Errorf("DISCORD_CHANNEL is required")
+		gh.Fatalf("DISCORD_CHANNEL is required")
 		return
 	}
 	service := gh.GetInput("SERVICE_NAME")
 	if service == "" {
-		gh.Errorf("SERVICE_NAME is required")
+		gh.Fatalf("SERVICE_NAME is required")
 		return
 	}
 	environment := gh.GetInput("SERVICE_ENVIRONMENT")
 	if environment == "" {
-		gh.Errorf("SERVICE_ENVIRONMENT is required")
+		gh.Fatalf("SERVICE_ENVIRONMENT is required")
 		return
 	}
 	stage := gh.GetInput("STAGE")
 	if stage == "" {
-		gh.Errorf("STAGE is required")
+		gh.Fatalf("STAGE is required")
 		return
 	}
 	stageStatus := gh.GetInput("STAGE_STATUS")
 	if stageStatus == "" {
-		gh.Errorf("STAGE_STATUS is required")
+		gh.Fatalf("STAGE_STATUS is required")
 		return
 	}
 
 	var err error
 	bot, err = discord.New(botToken)
 	if err != nil {
-		gh.Errorf("Failed to create discord bot: %s", err.Error())
+		gh.Fatalf("Failed to create discord bot: %s", err.Error())
 		return
 	}
 
@@ -89,7 +90,7 @@ func main() {
 	stageError := gh.GetInput("STAGE_ERROR")
 
 	if (thread == "") != (messageID == "") {
-		gh.Errorf("Must set both or neither of DISCORD_THREAD_ID and DISCORD_THREAD_MESSAGE_ID")
+		gh.Fatalf("Must set both or neither of DISCORD_THREAD_ID and DISCORD_THREAD_MESSAGE_ID")
 		return
 	}
 
@@ -102,7 +103,7 @@ func main() {
 	}
 
 	if err != nil {
-		gh.Errorf("failed to perform stage notice: %s", err.Error())
+		gh.Fatalf("failed to perform stage notice: %s", err.Error())
 	}
 
 }
@@ -252,8 +253,8 @@ func getRunURL() (string, error) {
 
 func getEmbedTitle() string {
 	service := gh.GetInput("SERVICE_NAME")
-	environment := gh.GetInput("SERVICE_NAME")
-	return fmt.Sprintf("%s %s DEPLOYMENT", service, environment)
+	environment := gh.GetInput("SERVICE_ENVIRONMENT")
+	return strings.ToUpper(fmt.Sprintf("%s %s DEPLOYMENT", service, environment))
 }
 
 func getThreadTitle() (string, error) {
@@ -262,9 +263,9 @@ func getThreadTitle() (string, error) {
 		return "", errors.Wrap(err, "failed to get github context")
 	}
 	service := gh.GetInput("SERVICE_NAME")
-	environment := gh.GetInput("SERVICE_NAME")
+	environment := gh.GetInput("SERVICE_ENVIRONMENT")
 
-	return fmt.Sprintf("%s %s DEPLOYMENT %d", service, environment, ctx.RunID), nil
+	return strings.ToUpper(fmt.Sprintf("%s %s DEPLOYMENT %d", service, environment, ctx.RunID)), nil
 }
 
 func getThreadHeaderEmbedContent(fail bool) (*discord.MessageEmbed, error) {
