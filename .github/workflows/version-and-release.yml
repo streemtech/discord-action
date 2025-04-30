@@ -10,7 +10,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: "0"
-      - name: Minor version for each merge
+      - name: Tag Patch
         id: tag
         uses: anothrNick/github-tag-action@1.71.0
         env:
@@ -19,6 +19,22 @@ jobs:
           VERBOSE: true
           GIT_API_TAGGING: false
           DEFAULT_BUMP: patch
+      - name: Tag Major
+        id: tag
+        uses: anothrNick/github-tag-action@1.71.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERBOSE: true
+          GIT_API_TAGGING: false
+          CUSTOM_TAG: v${{ steps.tag.outputs.major }}
+      - name: Tag Minor
+        id: tag
+        uses: anothrNick/github-tag-action@1.71.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERBOSE: true
+          GIT_API_TAGGING: false
+          CUSTOM_TAG: v${{ steps.tag.outputs.major }}.${{ steps.tag.outputs.minor }}
 
       - name: Release
         uses: softprops/action-gh-release@v2
