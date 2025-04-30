@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: streemtech/discord-action@v1
-        name: initialNotice
+        id: initialNotice
         with:
           DISCORD_BOT_TOKEN: ${{ secrets.BUILD_BOT_TOKEN }}
           DISCORD_CHANNEL: "923504689214025728"
@@ -33,7 +33,7 @@ jobs:
           STAGE: "test"
           STAGE_STATUS: "testing"
           DISCORD_THREAD_ID: ${{ steps.initialNotice.outputs.DISCORD_THREAD_ID }}
-          DISCORD_THREAD_MESSAGE_ID: ${{ steps.tests.outputs.DISCORD_MESSAGE_ID }}
+          DISCORD_THREAD_MESSAGE_ID: ${{ steps.initialNotice.outputs.DISCORD_MESSAGE_ID }}
           STAGE_STATUS_LONG: "Running Fake Tests"
           STAGE_ERROR: ""
           PING_ROLE: "<@&988658826599342120>"
@@ -50,7 +50,7 @@ jobs:
           STAGE: "test"
           STAGE_STATUS: "linting"
           DISCORD_THREAD_ID: ${{ steps.initialNotice.outputs.DISCORD_THREAD_ID }}
-          DISCORD_THREAD_MESSAGE_ID: ${{ steps.tests.outputs.DISCORD_MESSAGE_ID }}
+          DISCORD_THREAD_MESSAGE_ID: ${{ steps.initialNotice.outputs.DISCORD_MESSAGE_ID }}
           STAGE_STATUS_LONG: "Running Golangci-lint"
           STAGE_ERROR: ""
           PING_ROLE: "<@&988658826599342120>"
@@ -67,7 +67,7 @@ jobs:
           STAGE: "test"
           STAGE_STATUS: "Cleaning"
           DISCORD_THREAD_ID: ${{ steps.initialNotice.outputs.DISCORD_THREAD_ID }}
-          DISCORD_THREAD_MESSAGE_ID: ${{ steps.tests.outputs.DISCORD_MESSAGE_ID }}
+          DISCORD_THREAD_MESSAGE_ID: ${{ steps.initialNotice.outputs.DISCORD_MESSAGE_ID }}
           STAGE_STATUS_LONG: "Lint Complete"
           STAGE_ERROR: ""
           PING_ROLE: "<@&988658826599342120>"
@@ -84,7 +84,7 @@ jobs:
           STAGE: "build"
           STAGE_STATUS: "Pulling Files"
           DISCORD_THREAD_ID: ${{ steps.initialNotice.outputs.DISCORD_THREAD_ID }}
-          DISCORD_THREAD_MESSAGE_ID: ${{ steps.tests.outputs.DISCORD_MESSAGE_ID }}
+          DISCORD_THREAD_MESSAGE_ID: ${{ steps.initialNotice.outputs.DISCORD_MESSAGE_ID }}
           STAGE_STATUS_LONG: "Pulling files required for build environment"
           STAGE_ERROR: ""
           PING_ROLE: "<@&988658826599342120>"
@@ -101,7 +101,7 @@ jobs:
           STAGE: "build"
           STAGE_STATUS: "Compiling"
           DISCORD_THREAD_ID: ${{ steps.initialNotice.outputs.DISCORD_THREAD_ID }}
-          DISCORD_THREAD_MESSAGE_ID: ${{ steps.tests.outputs.DISCORD_MESSAGE_ID }}
+          DISCORD_THREAD_MESSAGE_ID: ${{ steps.initialNotice.outputs.DISCORD_MESSAGE_ID }}
           STAGE_STATUS_LONG: "Compiling images"
           STAGE_ERROR: ""
           PING_ROLE: "<@&988658826599342120>"
@@ -118,7 +118,7 @@ jobs:
           STAGE: "build"
           STAGE_STATUS: "Docker Building"
           DISCORD_THREAD_ID: ${{ steps.initialNotice.outputs.DISCORD_THREAD_ID }}
-          DISCORD_THREAD_MESSAGE_ID: ${{ steps.tests.outputs.DISCORD_MESSAGE_ID }}
+          DISCORD_THREAD_MESSAGE_ID: ${{ steps.initialNotice.outputs.DISCORD_MESSAGE_ID }}
           STAGE_STATUS_LONG: "Building images in docker"
           STAGE_ERROR: ""
           PING_ROLE: "<@&988658826599342120>"
@@ -135,7 +135,7 @@ jobs:
           STAGE: "e2e"
           STAGE_STATUS: "Loading terraform"
           DISCORD_THREAD_ID: ${{ steps.initialNotice.outputs.DISCORD_THREAD_ID }}
-          DISCORD_THREAD_MESSAGE_ID: ${{ steps.tests.outputs.DISCORD_MESSAGE_ID }}
+          DISCORD_THREAD_MESSAGE_ID: ${{ steps.initialNotice.outputs.DISCORD_MESSAGE_ID }}
           STAGE_STATUS_LONG: "Loading terraform status stuff"
           STAGE_ERROR: ""
           PING_ROLE: "<@&988658826599342120>"
@@ -152,7 +152,7 @@ jobs:
           STAGE: "e2e"
           STAGE_STATUS: "starting images"
           DISCORD_THREAD_ID: ${{ steps.initialNotice.outputs.DISCORD_THREAD_ID }}
-          DISCORD_THREAD_MESSAGE_ID: ${{ steps.tests.outputs.DISCORD_MESSAGE_ID }}
+          DISCORD_THREAD_MESSAGE_ID: ${{ steps.initialNotice.outputs.DISCORD_MESSAGE_ID }}
           STAGE_STATUS_LONG: "Starting images"
           STAGE_ERROR: ""
           PING_ROLE: "<@&988658826599342120>"
@@ -169,7 +169,7 @@ jobs:
           STAGE: "e2e"
           STAGE_STATUS: "e2e-testing"
           DISCORD_THREAD_ID: ${{ steps.initialNotice.outputs.DISCORD_THREAD_ID }}
-          DISCORD_THREAD_MESSAGE_ID: ${{ steps.tests.outputs.DISCORD_MESSAGE_ID }}
+          DISCORD_THREAD_MESSAGE_ID: ${{ steps.initialNotice.outputs.DISCORD_MESSAGE_ID }}
           STAGE_STATUS_LONG: "Executing end to end tests"
           STAGE_ERROR: ""
           PING_ROLE: "<@&988658826599342120>"
@@ -186,7 +186,7 @@ jobs:
           STAGE: "e2e"
           STAGE_STATUS: "Complete"
           DISCORD_THREAD_ID: ${{ steps.initialNotice.outputs.DISCORD_THREAD_ID }}
-          DISCORD_THREAD_MESSAGE_ID: ${{ steps.tests.outputs.DISCORD_MESSAGE_ID }}
+          DISCORD_THREAD_MESSAGE_ID: ${{ steps.initialNotice.outputs.DISCORD_MESSAGE_ID }}
           STAGE_STATUS_LONG: "Tests complete. Executing cleanup."
           STAGE_ERROR: ""
           PING_ROLE: "<@&988658826599342120>"
@@ -203,7 +203,7 @@ jobs:
           STAGE: "deploy"
           STAGE_STATUS: "Connecting"
           DISCORD_THREAD_ID: ${{ steps.initialNotice.outputs.DISCORD_THREAD_ID }}
-          DISCORD_THREAD_MESSAGE_ID: ${{ steps.tests.outputs.DISCORD_MESSAGE_ID }}
+          DISCORD_THREAD_MESSAGE_ID: ${{ steps.initialNotice.outputs.DISCORD_MESSAGE_ID }}
           STAGE_STATUS_LONG: "Connecting to streemtech network."
           STAGE_ERROR: ""
           PING_ROLE: "<@&988658826599342120>"
@@ -220,7 +220,7 @@ jobs:
           STAGE: "deploy"
           STAGE_STATUS: "Update Image"
           DISCORD_THREAD_ID: ${{ steps.initialNotice.outputs.DISCORD_THREAD_ID }}
-          DISCORD_THREAD_MESSAGE_ID: ${{ steps.tests.outputs.DISCORD_MESSAGE_ID }}
+          DISCORD_THREAD_MESSAGE_ID: ${{ steps.initialNotice.outputs.DISCORD_MESSAGE_ID }}
           STAGE_STATUS_LONG: "Updating desired streemtech image"
           STAGE_ERROR: ""
           PING_ROLE: "<@&988658826599342120>"
@@ -237,7 +237,7 @@ jobs:
           STAGE: "rollout"
           STAGE_STATUS: "Update Image"
           DISCORD_THREAD_ID: ${{ steps.initialNotice.outputs.DISCORD_THREAD_ID }}
-          DISCORD_THREAD_MESSAGE_ID: ${{ steps.tests.outputs.DISCORD_MESSAGE_ID }}
+          DISCORD_THREAD_MESSAGE_ID: ${{ steps.initialNotice.outputs.DISCORD_MESSAGE_ID }}
           STAGE_STATUS_LONG: "Rolling out new image"
           STAGE_ERROR: ""
           PING_ROLE: "<@&988658826599342120>"
@@ -254,7 +254,7 @@ jobs:
           STAGE: "complete"
           STAGE_STATUS: "Complete"
           DISCORD_THREAD_ID: ${{ steps.initialNotice.outputs.DISCORD_THREAD_ID }}
-          DISCORD_THREAD_MESSAGE_ID: ${{ steps.tests.outputs.DISCORD_MESSAGE_ID }}
+          DISCORD_THREAD_MESSAGE_ID: ${{ steps.initialNotice.outputs.DISCORD_MESSAGE_ID }}
           STAGE_STATUS_LONG: "Deployment Complete"
           STAGE_ERROR: ""
           PING_ROLE: "<@&988658826599342120>"
