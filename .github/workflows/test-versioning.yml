@@ -6,7 +6,7 @@ jobs:
   github-action-go:
     runs-on: ubuntu-latest
     steps:
-      - uses: streemtech/discord-action@v1
+      - uses: streemtech/discord-action@v0
         id: initialNotice
         with:
           DISCORD_BOT_TOKEN: ${{ secrets.BUILD_BOT_TOKEN }}
@@ -24,7 +24,7 @@ jobs:
       - run: sleep 2s
         shell: bash
 
-      - uses: streemtech/discord-action@v1
+      - uses: streemtech/discord-action@v0
         with:
           DISCORD_BOT_TOKEN: ${{ secrets.BUILD_BOT_TOKEN }}
           DISCORD_CHANNEL: "923504689214025728"
@@ -41,7 +41,7 @@ jobs:
       - run: sleep 2s
         shell: bash
 
-      - uses: streemtech/discord-action@v1
+      - uses: streemtech/discord-action@v0
         with:
           DISCORD_BOT_TOKEN: ${{ secrets.BUILD_BOT_TOKEN }}
           DISCORD_CHANNEL: "923504689214025728"
@@ -58,7 +58,7 @@ jobs:
       - run: sleep 2s
         shell: bash
 
-      - uses: streemtech/discord-action@v1
+      - uses: streemtech/discord-action@v0
         with:
           DISCORD_BOT_TOKEN: ${{ secrets.BUILD_BOT_TOKEN }}
           DISCORD_CHANNEL: "923504689214025728"
@@ -75,7 +75,7 @@ jobs:
       - run: sleep 2s
         shell: bash
 
-      - uses: streemtech/discord-action@v1
+      - uses: streemtech/discord-action@v0
         with:
           DISCORD_BOT_TOKEN: ${{ secrets.BUILD_BOT_TOKEN }}
           DISCORD_CHANNEL: "923504689214025728"
@@ -92,7 +92,7 @@ jobs:
       - run: sleep 2s
         shell: bash
 
-      - uses: streemtech/discord-action@v1
+      - uses: streemtech/discord-action@v0
         with:
           DISCORD_BOT_TOKEN: ${{ secrets.BUILD_BOT_TOKEN }}
           DISCORD_CHANNEL: "923504689214025728"
@@ -109,7 +109,7 @@ jobs:
       - run: sleep 2s
         shell: bash
 
-      - uses: streemtech/discord-action@v1
+      - uses: streemtech/discord-action@v0
         with:
           DISCORD_BOT_TOKEN: ${{ secrets.BUILD_BOT_TOKEN }}
           DISCORD_CHANNEL: "923504689214025728"
@@ -126,7 +126,7 @@ jobs:
       - run: sleep 2s
         shell: bash
 
-      - uses: streemtech/discord-action@v1
+      - uses: streemtech/discord-action@v0
         with:
           DISCORD_BOT_TOKEN: ${{ secrets.BUILD_BOT_TOKEN }}
           DISCORD_CHANNEL: "923504689214025728"
@@ -143,7 +143,7 @@ jobs:
       - run: sleep 2s
         shell: bash
 
-      - uses: streemtech/discord-action@v1
+      - uses: streemtech/discord-action@v0
         with:
           DISCORD_BOT_TOKEN: ${{ secrets.BUILD_BOT_TOKEN }}
           DISCORD_CHANNEL: "923504689214025728"
@@ -160,7 +160,7 @@ jobs:
       - run: sleep 2s
         shell: bash
 
-      - uses: streemtech/discord-action@v1
+      - uses: streemtech/discord-action@v0
         with:
           DISCORD_BOT_TOKEN: ${{ secrets.BUILD_BOT_TOKEN }}
           DISCORD_CHANNEL: "923504689214025728"
@@ -177,7 +177,7 @@ jobs:
       - run: sleep 2s
         shell: bash
 
-      - uses: streemtech/discord-action@v1
+      - uses: streemtech/discord-action@v0
         with:
           DISCORD_BOT_TOKEN: ${{ secrets.BUILD_BOT_TOKEN }}
           DISCORD_CHANNEL: "923504689214025728"
@@ -194,7 +194,7 @@ jobs:
       - run: sleep 2s
         shell: bash
 
-      - uses: streemtech/discord-action@v1
+      - uses: streemtech/discord-action@v0
         with:
           DISCORD_BOT_TOKEN: ${{ secrets.BUILD_BOT_TOKEN }}
           DISCORD_CHANNEL: "923504689214025728"
@@ -211,7 +211,7 @@ jobs:
       - run: sleep 2s
         shell: bash
 
-      - uses: streemtech/discord-action@v1
+      - uses: streemtech/discord-action@v0
         with:
           DISCORD_BOT_TOKEN: ${{ secrets.BUILD_BOT_TOKEN }}
           DISCORD_CHANNEL: "923504689214025728"
@@ -228,7 +228,7 @@ jobs:
       - run: sleep 2s
         shell: bash
 
-      - uses: streemtech/discord-action@v1
+      - uses: streemtech/discord-action@v0
         with:
           DISCORD_BOT_TOKEN: ${{ secrets.BUILD_BOT_TOKEN }}
           DISCORD_CHANNEL: "923504689214025728"
@@ -245,7 +245,7 @@ jobs:
       - run: sleep 2s
         shell: bash
 
-      - uses: streemtech/discord-action@v1
+      - uses: streemtech/discord-action@v0
         with:
           DISCORD_BOT_TOKEN: ${{ secrets.BUILD_BOT_TOKEN }}
           DISCORD_CHANNEL: "923504689214025728"
@@ -262,7 +262,7 @@ jobs:
       - run: sleep 2s
         shell: bash
 
-      - uses: streemtech/discord-action@v1
+      - uses: streemtech/discord-action@v0
         with:
           DISCORD_BOT_TOKEN: ${{ secrets.BUILD_BOT_TOKEN }}
           DISCORD_CHANNEL: "923504689214025728"
