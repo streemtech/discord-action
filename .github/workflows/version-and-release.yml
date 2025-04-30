@@ -20,7 +20,6 @@ jobs:
           GIT_API_TAGGING: false
           DEFAULT_BUMP: patch
       - name: Tag Major
-        id: tag
         uses: anothrNick/github-tag-action@1.71.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -28,7 +27,6 @@ jobs:
           GIT_API_TAGGING: false
           CUSTOM_TAG: v${{ steps.tag.outputs.major }}
       - name: Tag Minor
-        id: tag
         uses: anothrNick/github-tag-action@1.71.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
