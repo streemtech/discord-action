@@ -53,16 +53,6 @@ jobs:
           FORCE_WITHOUT_CHANGES: true
           CUSTOM_TAG: v${{ steps.semver_parser.outputs.major }}.${{ steps.semver_parser.outputs.minor }}
 
-      - uses: streemtech/discord-action@v0
-        with:
-          DISCORD_BOT_TOKEN: ${{ secrets.BUILD_BOT_TOKEN }}
-          DISCORD_CHANNEL: ${{inputs.DISCORD_CHANNEL}}
-          STAGE: "final-build"
-          STAGE_STATUS: "Re-Tagging Containers"
-          DISCORD_THREAD_ID: ${{ inputs.DISCORD_THREAD_ID }}
-          DISCORD_THREAD_MESSAGE_ID: ${{ inputs.DISCORD_MESSAGE_ID }}
-          STAGE_STATUS_LONG: "Retagging test containers for deployment to kubernetes"
-
       - name: Build and push testing containers
         run: |
           docker buildx build --push -f dockerfile \
