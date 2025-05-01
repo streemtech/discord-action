@@ -12,18 +12,13 @@ inputs:
   DISCORD_CHANNEL:
     description: "the ID of the channel to send the message to."
     required: true
-  SERVICE_NAME:
-    description: "The name of the service being worked in"
-    required: true
-  SERVICE_ENVIRONMENT:
-    description: "the environment being executed in"
-    required: true
   STAGE:
     description: "What stage of the build currently being executed. Shoul be one of test,build,e2e,final-build,deploy,complete"
     required: true
   STAGE_STATUS:
     description: "The value to use to update the top level indicator"
     required: true
+
   DISCORD_THREAD_ID:
     description: "The id of the thread to post the message in. DISCORD_THREAD_ID and DISCORD_THREAD_MESSAGE_ID must be set tegother if set."
     required: false

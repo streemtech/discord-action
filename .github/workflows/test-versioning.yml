@@ -11,8 +11,6 @@ jobs:
         with:
           DISCORD_BOT_TOKEN: ${{ secrets.BUILD_BOT_TOKEN }}
           DISCORD_CHANNEL: "923504689214025728"
-          SERVICE_NAME: "action"
-          SERVICE_ENVIRONMENT: "PRODUCTION"
           STAGE: "test"
           STAGE_STATUS: "Init"
           DISCORD_THREAD_ID: ""
@@ -28,8 +26,6 @@ jobs:
         with:
           DISCORD_BOT_TOKEN: ${{ secrets.BUILD_BOT_TOKEN }}
           DISCORD_CHANNEL: "923504689214025728"
-          SERVICE_NAME: "action"
-          SERVICE_ENVIRONMENT: "PRODUCTION"
           STAGE: "test"
           STAGE_STATUS: "testing"
           DISCORD_THREAD_ID: ${{ steps.initialNotice.outputs.DISCORD_THREAD_ID }}
@@ -45,8 +41,6 @@ jobs:
         with:
           DISCORD_BOT_TOKEN: ${{ secrets.BUILD_BOT_TOKEN }}
           DISCORD_CHANNEL: "923504689214025728"
-          SERVICE_NAME: "action"
-          SERVICE_ENVIRONMENT: "PRODUCTION"
           STAGE: "test"
           STAGE_STATUS: "linting"
           DISCORD_THREAD_ID: ${{ steps.initialNotice.outputs.DISCORD_THREAD_ID }}
@@ -62,8 +56,6 @@ jobs:
         with:
           DISCORD_BOT_TOKEN: ${{ secrets.BUILD_BOT_TOKEN }}
           DISCORD_CHANNEL: "923504689214025728"
-          SERVICE_NAME: "action"
-          SERVICE_ENVIRONMENT: "PRODUCTION"
           STAGE: "test"
           STAGE_STATUS: "Cleaning"
           DISCORD_THREAD_ID: ${{ steps.initialNotice.outputs.DISCORD_THREAD_ID }}
@@ -79,8 +71,6 @@ jobs:
         with:
           DISCORD_BOT_TOKEN: ${{ secrets.BUILD_BOT_TOKEN }}
           DISCORD_CHANNEL: "923504689214025728"
-          SERVICE_NAME: "action"
-          SERVICE_ENVIRONMENT: "PRODUCTION"
           STAGE: "build"
           STAGE_STATUS: "Pulling Files"
           DISCORD_THREAD_ID: ${{ steps.initialNotice.outputs.DISCORD_THREAD_ID }}
@@ -96,8 +86,6 @@ jobs:
         with:
           DISCORD_BOT_TOKEN: ${{ secrets.BUILD_BOT_TOKEN }}
           DISCORD_CHANNEL: "923504689214025728"
-          SERVICE_NAME: "action"
-          SERVICE_ENVIRONMENT: "PRODUCTION"
           STAGE: "build"
           STAGE_STATUS: "Compiling"
           DISCORD_THREAD_ID: ${{ steps.initialNotice.outputs.DISCORD_THREAD_ID }}
@@ -113,8 +101,6 @@ jobs:
         with:
           DISCORD_BOT_TOKEN: ${{ secrets.BUILD_BOT_TOKEN }}
           DISCORD_CHANNEL: "923504689214025728"
-          SERVICE_NAME: "action"
-          SERVICE_ENVIRONMENT: "PRODUCTION"
           STAGE: "build"
           STAGE_STATUS: "Docker Building"
           DISCORD_THREAD_ID: ${{ steps.initialNotice.outputs.DISCORD_THREAD_ID }}
@@ -130,8 +116,6 @@ jobs:
         with:
           DISCORD_BOT_TOKEN: ${{ secrets.BUILD_BOT_TOKEN }}
           DISCORD_CHANNEL: "923504689214025728"
-          SERVICE_NAME: "action"
-          SERVICE_ENVIRONMENT: "PRODUCTION"
           STAGE: "e2e"
           STAGE_STATUS: "Loading terraform"
           DISCORD_THREAD_ID: ${{ steps.initialNotice.outputs.DISCORD_THREAD_ID }}
@@ -147,8 +131,6 @@ jobs:
         with:
           DISCORD_BOT_TOKEN: ${{ secrets.BUILD_BOT_TOKEN }}
           DISCORD_CHANNEL: "923504689214025728"
-          SERVICE_NAME: "action"
-          SERVICE_ENVIRONMENT: "PRODUCTION"
           STAGE: "e2e"
           STAGE_STATUS: "starting images"
           DISCORD_THREAD_ID: ${{ steps.initialNotice.outputs.DISCORD_THREAD_ID }}
@@ -164,8 +146,6 @@ jobs:
         with:
           DISCORD_BOT_TOKEN: ${{ secrets.BUILD_BOT_TOKEN }}
           DISCORD_CHANNEL: "923504689214025728"
-          SERVICE_NAME: "action"
-          SERVICE_ENVIRONMENT: "PRODUCTION"
           STAGE: "e2e"
           STAGE_STATUS: "e2e-testing"
           DISCORD_THREAD_ID: ${{ steps.initialNotice.outputs.DISCORD_THREAD_ID }}
@@ -181,8 +161,6 @@ jobs:
         with:
           DISCORD_BOT_TOKEN: ${{ secrets.BUILD_BOT_TOKEN }}
           DISCORD_CHANNEL: "923504689214025728"
-          SERVICE_NAME: "action"
-          SERVICE_ENVIRONMENT: "PRODUCTION"
           STAGE: "e2e"
           STAGE_STATUS: "Complete"
           DISCORD_THREAD_ID: ${{ steps.initialNotice.outputs.DISCORD_THREAD_ID }}
@@ -198,8 +176,6 @@ jobs:
         with:
           DISCORD_BOT_TOKEN: ${{ secrets.BUILD_BOT_TOKEN }}
           DISCORD_CHANNEL: "923504689214025728"
-          SERVICE_NAME: "action"
-          SERVICE_ENVIRONMENT: "PRODUCTION"
           STAGE: "deploy"
           STAGE_STATUS: "Connecting"
           DISCORD_THREAD_ID: ${{ steps.initialNotice.outputs.DISCORD_THREAD_ID }}
@@ -215,8 +191,6 @@ jobs:
         with:
           DISCORD_BOT_TOKEN: ${{ secrets.BUILD_BOT_TOKEN }}
           DISCORD_CHANNEL: "923504689214025728"
-          SERVICE_NAME: "action"
-          SERVICE_ENVIRONMENT: "PRODUCTION"
           STAGE: "deploy"
           STAGE_STATUS: "Update Image"
           DISCORD_THREAD_ID: ${{ steps.initialNotice.outputs.DISCORD_THREAD_ID }}
@@ -232,8 +206,6 @@ jobs:
         with:
           DISCORD_BOT_TOKEN: ${{ secrets.BUILD_BOT_TOKEN }}
           DISCORD_CHANNEL: "923504689214025728"
-          SERVICE_NAME: "action"
-          SERVICE_ENVIRONMENT: "PRODUCTION"
           STAGE: "deploy"
           STAGE_STATUS: "rollout"
           DISCORD_THREAD_ID: ${{ steps.initialNotice.outputs.DISCORD_THREAD_ID }}
@@ -249,8 +221,6 @@ jobs:
         with:
           DISCORD_BOT_TOKEN: ${{ secrets.BUILD_BOT_TOKEN }}
           DISCORD_CHANNEL: "923504689214025728"
-          SERVICE_NAME: "action"
-          SERVICE_ENVIRONMENT: "PRODUCTION"
           STAGE: "complete"
           STAGE_STATUS: "Complete"
           DISCORD_THREAD_ID: ${{ steps.initialNotice.outputs.DISCORD_THREAD_ID }}
@@ -266,8 +236,6 @@ jobs:
         with:
           DISCORD_BOT_TOKEN: ${{ secrets.BUILD_BOT_TOKEN }}
           DISCORD_CHANNEL: "923504689214025728"
-          SERVICE_NAME: "action"
-          SERVICE_ENVIRONMENT: "PRODUCTION"
           STAGE: "deploy"
           STAGE_STATUS: "Rollout Failed"
           DISCORD_THREAD_ID: ${{ steps.initialNotice.outputs.DISCORD_THREAD_ID }}

@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"strings"
 	"time"
 
 	discord "github.com/bwmarrin/discordgo"
@@ -55,16 +54,6 @@ func main() {
 	channel := gh.GetInput("DISCORD_CHANNEL")
 	if channel == "" {
 		gh.Fatalf("DISCORD_CHANNEL is required")
-		return
-	}
-	service := gh.GetInput("SERVICE_NAME")
-	if service == "" {
-		gh.Fatalf("SERVICE_NAME is required")
-		return
-	}
-	environment := gh.GetInput("SERVICE_ENVIRONMENT")
-	if environment == "" {
-		gh.Fatalf("SERVICE_ENVIRONMENT is required")
 		return
 	}
 	stage := gh.GetInput("STAGE")
@@ -317,10 +306,16 @@ func getRunURL() (string, error) {
 	return fmt.Sprintf("%s/%s/%s/actions/runs/%d", ctx.ServerURL, owner, name, ctx.RunID), nil
 }
 
-func getEmbedTitle() string {
-	service := gh.GetInput("SERVICE_NAME")
-	environment := gh.GetInput("SERVICE_ENVIRONMENT")
-	return strings.ToUpper(fmt.Sprintf("%s %s DEPLOYMENT", service, environment))
+func getEmbedTitle() (string, error) {
+	ctx, err := gh.Context()
+	if err != nil {
+		return "", errors.Wrap(err, "failed to get github context")
+	}
+
+	_, service := ctx.Repo()
+
+	environment := ctx.RefName
+	return fmt.Sprintf("%s/%s", service, environment), nil
 }
 
 func getThreadTitle() (string, error) {
@@ -328,10 +323,10 @@ func getThreadTitle() (string, error) {
 	if err != nil {
 		return "", errors.Wrap(err, "failed to get github context")
 	}
-	service := gh.GetInput("SERVICE_NAME")
-	environment := gh.GetInput("SERVICE_ENVIRONMENT")
+	_, service := ctx.Repo()
+	environment := ctx.RefName
 
-	return strings.ToUpper(fmt.Sprintf("%s %s DEPLOYMENT %d", service, environment, ctx.RunID)), nil
+	return fmt.Sprintf("%s/%s:%d", service, environment, ctx.RunID), nil
 }
 
 func getThreadHeaderEmbedContent(fail bool) (*discord.MessageEmbed, error) {
@@ -413,11 +408,16 @@ func getThreadHeaderEmbedContent(fail bool) (*discord.MessageEmbed, error) {
 		color = RedColor
 	}
 
+	embedTitle, err := getEmbedTitle()
+	if err != nil {
+		return nil, errors.Wrap(err, "failed to get embed title for embed content")
+	}
+
 	embed := &discord.MessageEmbed{
 		Type: discord.EmbedTypeRich,
 		Author: &discord.MessageEmbedAuthor{
 			URL:  runUrl,
-			Name: getEmbedTitle(),
+			Name: embedTitle,
 		},
 		Fields:    fields,
 		Color:     color,
