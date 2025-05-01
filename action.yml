@@ -3,7 +3,7 @@ description: "A hard coded action that updates discord with the build status for
 author: deefdragon
 runs:
   using: docker
-  image: Dockerfile
+  image: docker://harbor.streem.tech/streemtech-pub/docker-action:v0
 
 inputs:
   DISCORD_BOT_TOKEN:
