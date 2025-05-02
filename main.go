@@ -61,11 +61,6 @@ func main() {
 		gh.Fatalf("STAGE is required")
 		return
 	}
-	stageStatus := gh.GetInput("STAGE_STATUS")
-	if stageStatus == "" {
-		gh.Fatalf("STAGE_STATUS is required")
-		return
-	}
 
 	var err error
 	bot, err = discord.New(botToken)
