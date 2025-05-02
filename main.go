@@ -336,7 +336,7 @@ func getThreadHeaderEmbedContent(fail bool) (*discord.MessageEmbed, error) {
 	color := GreenColor
 
 	if fail {
-		stageStatus = fmt.Sprintf("%s %s %s", failEmoji, stageStatus, failEmoji)
+		stageStatus = fmt.Sprintf("%s %s %s", failEmoji, gh.GetInput("STAGE_ERROR"), failEmoji)
 	}
 
 	//set stage status texts.
