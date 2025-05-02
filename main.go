@@ -228,7 +228,7 @@ func reportStageError() error {
 		return errors.Wrap(err, "failed to get thread header embed content")
 	}
 
-	TopLevelDesc := gh.GetInput("STAGE_STATUS_LONG")
+	TopLevelDesc := gh.GetInput("STAGE_ERROR")
 	embedContent.Description = fmt.Sprintf("%s %s %s", failEmoji, TopLevelDesc, failEmoji)
 
 	_, err = bot.ChannelMessageEditComplex(&discord.MessageEdit{
@@ -242,7 +242,7 @@ func reportStageError() error {
 		return errors.Wrap(err, "failed to edit message message")
 	}
 
-	ErrorMessage := gh.GetInput("STAGE_ERROR")
+	ErrorMessage := gh.GetInput("STAGE_STATUS_LONG")
 	_, err = bot.ChannelMessageSendComplex(thread, &discord.MessageSend{
 		Content: gh.GetInput("PING_ROLE"),
 		Embeds: []*discord.MessageEmbed{
