@@ -79,12 +79,14 @@ func main() {
 		return
 	}
 
-	if thread == "" || messageID == "" {
-		err = startThread()
-	} else if stageError != "" {
-		err = reportStageError()
-	} else if canceledMsg != "" {
+	if canceledMsg != "" {
 		err = reportCanceled()
+	} else if stageError != "" {
+		//should be impossible to error without thread/message.
+		//if that DOES happen, thats an error on its own.
+		err = reportStageError()
+	} else if thread == "" || messageID == "" {
+		err = startThread()
 	} else {
 		err = updateThread()
 	}
@@ -261,20 +263,50 @@ func reportCanceled() error {
 		return errors.Wrap(err, "failed to get thread header embed content")
 	}
 
+	threadMessageID := gh.GetInput("DISCORD_THREAD_MESSAGE_ID")
+
 	embedContent.Description = gh.GetInput("CANCELED_MESSAGE")
 	embedContent.Color = GreyColor
-	_, err = bot.ChannelMessageEditComplex(&discord.MessageEdit{
-		ID:      gh.GetInput("DISCORD_THREAD_MESSAGE_ID"),
-		Channel: gh.GetInput("DISCORD_CHANNEL"),
-		Embeds: &[]*discord.MessageEmbed{
-			embedContent,
-		},
-	})
-	if err != nil {
-		return errors.Wrap(err, "failed to edit message")
+
+	threadID := gh.GetInput("DISCORD_THREAD_ID")
+	channel := gh.GetInput("DISCORD_CHANNEL")
+	if threadMessageID == "" {
+		msg, err := bot.ChannelMessageSendComplex(channel, &discord.MessageSend{
+
+			Embeds: []*discord.MessageEmbed{
+				embedContent,
+			},
+		})
+		if err != nil {
+			return errors.Wrap(err, "failed to edit message")
+		}
+		threadTitle, err := getThreadTitle()
+		if err != nil {
+			return errors.Wrap(err, "failed to get thread title")
+		}
+		thread, err := bot.MessageThreadStartComplex(channel, msg.ID, &discord.ThreadStart{
+			Name:                threadTitle,
+			AutoArchiveDuration: 60 * 24 * 7, // archive after 7 days.
+		})
+		if err != nil {
+			return errors.Wrap(err, "failed to start thread from message")
+		}
+		threadID = thread.ID
+	} else {
+		_, err = bot.ChannelMessageEditComplex(&discord.MessageEdit{
+			ID:      threadMessageID,
+			Channel: channel,
+			Embeds: &[]*discord.MessageEmbed{
+				embedContent,
+			},
+		})
+		if err != nil {
+			return errors.Wrap(err, "failed to edit message")
+		}
+
 	}
 
-	_, err = bot.ChannelMessageSendComplex(gh.GetInput("DISCORD_THREAD_ID"), &discord.MessageSend{
+	_, err = bot.ChannelMessageSendComplex(threadID, &discord.MessageSend{
 		Embeds: []*discord.MessageEmbed{
 			{
 				Color:       GreyColor,
