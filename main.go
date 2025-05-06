@@ -127,7 +127,7 @@ func startThread() (err error) {
 	}
 	thread, err := bot.MessageThreadStartComplex(channel, msg.ID, &discord.ThreadStart{
 		Name:                threadTitle,
-		AutoArchiveDuration: 60 * 24 * 7, // archive after 7 days.
+		AutoArchiveDuration: 60 * 24, // archive after 1 day.
 	})
 	if err != nil {
 		return errors.Wrap(err, "failed to start thread from message")
@@ -241,7 +241,7 @@ func reportStageError() error {
 
 	ErrorMessage := gh.GetInput("STAGE_STATUS_LONG")
 	_, err = bot.ChannelMessageSendComplex(thread, &discord.MessageSend{
-		Content: gh.GetInput("PING_ROLE"),
+		Content: gh.GetInput("PING_ROLE"), // TODO consider adding ping_role lookup.
 		Embeds: []*discord.MessageEmbed{
 			{
 				Color:       RedColor,
@@ -286,7 +286,7 @@ func reportCanceled() error {
 		}
 		thread, err := bot.MessageThreadStartComplex(channel, msg.ID, &discord.ThreadStart{
 			Name:                threadTitle,
-			AutoArchiveDuration: 60 * 24 * 7, // archive after 7 days.
+			AutoArchiveDuration: 60 * 24, // archive after 1 day.
 		})
 		if err != nil {
 			return errors.Wrap(err, "failed to start thread from message")
@@ -353,7 +353,7 @@ func getThreadTitle() (string, error) {
 	_, service := ctx.Repo()
 	environment := ctx.RefName
 
-	return fmt.Sprintf("%s/%s:%d", service, environment, ctx.RunID), nil
+	return fmt.Sprintf("%s/%s:%d %s", service, environment, ctx.RunID, ctx.Actor), nil
 }
 
 func getThreadHeaderEmbedContent(fail bool) (*discord.MessageEmbed, error) {
