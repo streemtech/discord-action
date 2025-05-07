@@ -9,6 +9,11 @@ import (
 	gh "github.com/sethvargo/go-githubactions"
 )
 
+var userMap = map[string]string{
+	"deefdragon":       "<@185154014181064704>",
+	"TheManiacalGamer": "<@164539905677066241>",
+}
+
 const CompleteEmoji = "✅"
 const WaitingEmoji = "⏳"
 const failEmoji = "❌"
@@ -239,9 +244,19 @@ func reportStageError() error {
 		return errors.Wrap(err, "failed to edit message message")
 	}
 
+	//Look up who to ping list, and use that
+	content := gh.GetInput("PING_ROLE")
+	ctx, err := gh.Context()
+	if err == nil {
+		actor, ok := userMap[ctx.Actor]
+		if ok {
+			content = content + " " + actor
+		}
+	}
+
 	ErrorMessage := gh.GetInput("STAGE_STATUS_LONG")
 	_, err = bot.ChannelMessageSendComplex(thread, &discord.MessageSend{
-		Content: gh.GetInput("PING_ROLE"), // TODO consider adding ping_role lookup.
+		Content: content,
 		Embeds: []*discord.MessageEmbed{
 			{
 				Color:       RedColor,
